@@ -1,18 +1,24 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
-
 import DashboardPage from "./pages/DashboardPage";
-
 import EmployeePage from "./pages/EmployeePage";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("token");
+
+  return token ? children : <Navigate to="/" />;
+}
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Login */}
+
         <Route path="/" element={<LoginPage />} />
+
+        {/* Dashboard */}
 
         <Route
           path="/dashboard"
@@ -23,6 +29,8 @@ function App() {
           }
         />
 
+        {/* Employees */}
+
         <Route
           path="/employees"
           element={
@@ -31,6 +39,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Invalid URL Redirect */}
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
