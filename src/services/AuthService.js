@@ -1,9 +1,10 @@
-import api from "../api/axiosConfig";
+import axios from "axios";
 
-const login = (data) => {
-  return api.post("/auth/login", data);
-};
+const api = axios.create({
+  baseURL: "/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-export default {
-  login,
-};
+export default api;
